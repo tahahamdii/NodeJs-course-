@@ -1,31 +1,33 @@
-var express = require('express');
-var productsRouter = express.Router();
+// routes/products.js
+const express = require('express');
+const router = express.Router();
 const productsData = require('../public/data/products.json');
 
-productsRouter.get('/', function(req, res, next) {
-    res.json(productsData);
-    }
-    );
+router.get('/', (req, res) => {
+  res.json({
+    products: productsData,
+  });
+});
 
-    router.get('/:id', (req, res) => {
-        const productId = req.params.id;
-        const product = productsData.find((p) => p.id === productId);
-      
-        if (product) {
-          res.json({
-            product,
-          });
-        } else {
-          res.status(404).json({
-            message: 'Produit non trouvé',
-          });
-        }
-      });
+router.get('/:id', (req, res) => {
+  const productId = req.params.id;
+  const product = productsData[productId];
+
+  if (product) {
+    res.json({
+      product,
+    });
+  } else {
+    res.status(404).json({
+      message: 'Product not found',
+    });
+  }
+});
 
 router.get('/:id/:qt', (req, res) => {
   const productId = req.params.id;
   const quantity = parseInt(req.params.qt, 10);
-  const product = productsData.find((p) => p.id === productId);
+  const product = productsData[productId];
 
   if (product) {
     const totalPrice = quantity * product.price;
@@ -34,9 +36,11 @@ router.get('/:id/:qt', (req, res) => {
     });
   } else {
     res.status(404).json({
-      message: 'Produit non trouvé',
+      message: 'Product not found',
     });
   }
 });
-    
-module.exports = productsRouter;
+
+
+
+module.exports = router;
