@@ -1,11 +1,10 @@
 var express = require('express');
 var osRouter = express.Router();
-
 const os = require('os');
 
 
 
-osRouter.get('/info', function(req, res, next) {
+osRouter.get('/', function(req, res, next) {
     res.json({
         hostname: os.hostname(),
         type: os.type(),
@@ -19,12 +18,12 @@ osRouter.get('/info', function(req, res, next) {
         });
         });
 
-        osRouter.get('/cpus/:id', function(req, res, next) {
-            res.json({
-                cpus: os.cpus()[req.params.id]
-            });
-            }
-            );
+    //     osRouter.get('/cpus/:id', function(req, res, next) {
+    //         res.json({
+    //             cpus: os.cpus()[req.params.id]
+    //         });
+    //         }
+    //         );
 
 module.exports = osRouter;
 
