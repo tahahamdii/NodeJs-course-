@@ -41,6 +41,6 @@ router.get('/:id/:qt', (req, res) => {
   }
 });
 
-
+ 
 
 module.exports = router;
