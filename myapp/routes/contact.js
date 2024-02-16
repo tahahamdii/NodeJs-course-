@@ -22,6 +22,10 @@ Contactrouter.get('/get', function(req, res, next) {
     );
     });
 
+Contactrouter.get('/add', function(req,res,next){
+    res.render('add_contact.twig',{title: "Add Contact"});
+})
+
 Contactrouter.post('/post', function(req, res, next) {
     new Contact(
         {
@@ -38,3 +42,36 @@ Contactrouter.post('/post', function(req, res, next) {
         }
     });
     });
+
+    Contactrouter.get('/:id', function(req, res, next) {
+        Contact.findById(req.params.id, (err, contact) => {
+            if (err) console.log("error message :  " + err);
+            else {
+                console.log(contact);
+                res.render('contact_detail.twig', { title: "Contact Detail", contact: contact });
+            }
+        });
+    });
+
+    Contactrouter.delete('/:id', function(req, res, next) {
+        Contact.findByIdAndRemove(req.params.id, (err, contact) => {
+            if (err) console.log("error message :  " + err);
+            else {
+                console.log("Contact removed:", contact);
+                res.json("Contact removed");
+            }
+        });
+    });
+
+    Contactrouter.put('/:id', function(req, res, next) {
+        Contact.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, contact) => {
+            if (err) console.log("error message :  " + err);
+            else {
+                console.log("Updated contact:", contact);
+                res.json("Contact updated");
+            }
+        });
+    });
+    
+    
+    
