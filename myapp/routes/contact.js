@@ -11,7 +11,7 @@ module.exports = Contactrouter;
 // Créer le nouveau fichier des routes associées au modèle contact sous « routes/contacts.js » et l’ajouter dans app.js 10.On a besoin de mettre à jour le fichier contacts.js pour ajouter (via POST) et de lire (via GET) les données(data) à partir de la collection Mongo. 9.1. Ajouter la requête GET avec le path (/contacts/) pour afficher la liste de tous les contacts 
 
 Contactrouter.get('/get', function(req, res, next) {
-  Contact.find(
+Contact.find(
     (err , contacts) => {
         res.render(
             'form.twig',
@@ -20,7 +20,7 @@ Contactrouter.get('/get', function(req, res, next) {
         );
         }
     );
-    });
+});
 
 Contactrouter.get('/add', function(req,res,next){
     res.render('add_contact.twig',{title: "Add Contact"});

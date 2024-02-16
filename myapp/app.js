@@ -42,16 +42,12 @@ app.use('/contact', Contactrouter);
 
 
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+// Start server 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
 
 
