@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-time Chat</title>
+  <script src="socket.io/socket.io.js"></script>
+</head>
+<body>
+  <h1>Real-time Chat</h1>
+
+  <ul id="chat-messages">
+    </ul>
+
+  <form id="message-form">
+    <input type="text" id="message-input" placeholder="Enter your message...">
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+const socket = io();
+
+socket.on('connect', () => {
+  console.log('Connected to socket server!');
+});
+
+const messageForm = document.getElementById('message-form');
+messageForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const messageInput = document.getElementById('message-input');
+  const message = messageInput.value;
+  socket.emit('chat message', message);
+  messageInput.value = '';
+});
+
+socket.on('chat message', (message) => {
+  const chatMessages = document.getElementById('chat-messages');
+  const messageElement = document.createElement('li');
+  messageElement.textContent = `${message.username}: ${message.message} (${twig.extensions.formatDate(message.timestamp)})`;
+  chatMessages.appendChild(messageElement);
+});
+  </script>
+</body>
+</html>
